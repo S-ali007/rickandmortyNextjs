@@ -1,5 +1,6 @@
 import getCharacter from "../../../../services/getCharacters";
 import Image from "next/image";
+import Link from "next/link";
 
 export default async function page(props) {
   const getList = getCharacter();
@@ -49,9 +50,18 @@ export default async function page(props) {
             <div className="text-[16px] font-bold">Location:</div>
             <div>{currentdetail.location.name}</div>
           </div>
+          <Link className="max-w-[200px] w-full text-[18px] font-bold flex justify-center p-[10px] border rounded-[10px] bg-teal-700 text-[#fff] hover:bg-slate-400" href={"/characterlist"} >Back</Link>
         </div>
       
       </div>
     </div>
   );
+}
+
+
+export async function generateStaticParams(){
+    const getList = getCharacter();
+    const list = await getList;
+    return list?.results?.map(list=>({characterId:list.id.toString()
+    }))
 }
